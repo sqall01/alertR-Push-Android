@@ -10,8 +10,7 @@ import android.content.Intent;
 
 /*
 TODO
-- wenn app nicht im Vordergrund ist Nachrichten empfangen und Notification
-- Vibration und Ton
+- if app is not started we can not store notifications
 */
 
 public class MainActivity extends AppCompatActivity {
