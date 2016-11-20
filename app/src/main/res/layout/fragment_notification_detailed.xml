@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="de.alertr.alertralarmnotification.NotificationDetailedFragment"
+    android:padding="16dip" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/notification_detailed_subject"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:id="@+id/subject_headline" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:typeface="sans"
+                android:id="@+id/subject_content"
+                android:paddingBottom="@dimen/notification_detailed_content_bottom" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#bfbfbf"
+                 />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/notification_detailed_message"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:id="@+id/message_headline"
+                android:paddingTop="@dimen/activity_vertical_margin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:typeface="sans"
+                android:id="@+id/message_content"
+                android:paddingBottom="@dimen/notification_detailed_content_bottom" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#bfbfbf" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/notification_detailed_state"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:id="@+id/state_headline"
+                android:paddingTop="@dimen/activity_vertical_margin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:typeface="sans"
+                android:id="@+id/state_content"
+                android:paddingBottom="@dimen/notification_detailed_content_bottom" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#bfbfbf" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/notification_detailed_triggered_on"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:id="@+id/triggered_on_headline"
+                android:paddingTop="@dimen/activity_vertical_margin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:typeface="sans"
+                android:id="@+id/triggered_on_content"
+                android:paddingBottom="@dimen/notification_detailed_content_bottom" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#bfbfbf" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/notification_detailed_sent_on"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:id="@+id/sent_on_headline"
+                android:paddingTop="@dimen/activity_vertical_margin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:typeface="sans"
+                android:id="@+id/sent_on_content"
+                android:paddingBottom="@dimen/notification_detailed_content_bottom"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#bfbfbf" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/notification_detailed_received_on"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:id="@+id/received_on_headline"
+                android:paddingTop="@dimen/activity_vertical_margin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:typeface="sans"
+                android:id="@+id/received_on_content"
+                android:paddingBottom="@dimen/notification_detailed_content_bottom" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#bfbfbf" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/notification_detailed_channel"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:id="@+id/channel_headline"
+                android:paddingTop="@dimen/activity_vertical_margin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:typeface="sans"
+                android:id="@+id/channel_content"
+                android:paddingBottom="@dimen/notification_detailed_content_bottom" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

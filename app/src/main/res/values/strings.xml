@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">alertR</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="pref_push_channel_key">channel</string>
+    <string name="pref_push_channel">Channel</string>
+    <string name="pref_push_channel_summary">The channel your alertR notifications are send in. Comma separated list of channels.</string>
+
+    <string name="pref_push_encryption_key">secret</string>
+    <string name="pref_push_encryption">Shared Secret</string>
+    <string name="pref_push_encryption_summary">The secret that is used to decrypt the received notifications.</string>
+
+    <string name="pref_push_number_notifications_key">number_notifications</string>
+    <string name="pref_push_number_notifications">Number of Notifications</string>
+    <string name="pref_push_number_notifications_summary">The number of notifications that are stored on this device.</string>
+    <string name="pref_push_number_notifications_default">100</string>
+
+    <string name="pref_push_notification_key">notification_enabled</string>
+    <string name="pref_push_notification">Enable Notifications</string>
+    <string name="pref_push_notification_summary">Display a notification, vibrate and make a sound when a message arrives.</string>
+    <string name="pref_push_notification_default">True</string>
+
+    <string name="notification_detailed_subject">Subject:</string>
+    <string name="notification_detailed_triggered_on">Triggered on:</string>
+    <string name="notification_detailed_sent_on">Sent on:</string>
+    <string name="notification_detailed_received_on">Received on:</string>
+    <string name="notification_detailed_state">State:</string>
+    <string name="notification_detailed_channel">Channel:</string>
+    <string name="notification_detailed_message">Message:</string>
+
+
+
+    <string-array name="pref_push_number_notifications_entries">
+        <item>10</item>
+        <item>50</item>
+        <item>100</item>
+        <item>1000</item>
+    </string-array>
+
+    <string-array name="pref_push_number_notifications_entries_values">
+        <item>10</item>
+        <item>50</item>
+        <item>100</item>
+        <item>1000</item>
+    </string-array>
+
+
+</resources>

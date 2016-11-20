@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:defaultValue=""
+        android:inputType="textMultiLine"
+        android:key="@string/pref_push_channel_key"
+        android:title="@string/pref_push_channel"
+        android:summary="@string/pref_push_channel_summary"/>
+
+    <EditTextPreference
+        android:defaultValue=""
+        android:maxLength="32"
+        android:inputType="text"
+        android:key="@string/pref_push_encryption_key"
+        android:title="@string/pref_push_encryption"
+        android:summary="@string/pref_push_encryption_summary"/>
+
+    <ListPreference
+        android:defaultValue="@string/pref_push_number_notifications_default"
+        android:key="@string/pref_push_number_notifications_key"
+        android:title="@string/pref_push_number_notifications"
+        android:summary="@string/pref_push_number_notifications_summary"
+        android:entries="@array/pref_push_number_notifications_entries"
+        android:entryValues="@array/pref_push_number_notifications_entries_values" />
+
+    <SwitchPreference
+        android:defaultValue="@string/pref_push_notification_default"
+        android:key="@string/pref_push_notification_key"
+        android:title="@string/pref_push_notification"
+        android:summary="@string/pref_push_notification_summary" />
+
+</PreferenceScreen>
