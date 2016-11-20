@@ -1,2 +1,3 @@
-# alertR-Push-Android
-Official Android App of the alertR alarm and monitoring system to receive push notifications
+# alertR Push Android App
+
+The source code of the [official Android App](TODO LINK TO PLAYSTORE) of the [alertR alarm and monitoring system](https://github.com/sqall01/alertR) to receive push notifications. In order to use this app, you need to register an account at [alertr.de](https://alertr.de) and follow the setup instructions. If you are searching for a detailed description of the push service design, please read the pages in the official alertR [Github Wiki](https://github.com/sqall01/alertR/wiki/Infrastructure#infrastructure_push).
