@@ -7,11 +7,14 @@ import android.view.MenuItem;
 import android.util.Log;
 import android.content.Intent;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
-/*
-TODO
-- if app is not started we can not store notifications
-*/
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -34,6 +38,85 @@ public class MainActivity extends AppCompatActivity {
         // Initiate configuration (needs object of this main activity).
         Config config = Config.getInstance();
 
+        // Load existing received encrypted messages (if exists).
+        ArrayList<ReceivedEncryptedMessage> received_enc_messages = null;
+        try {
+            File file_obj = getBaseContext().getFileStreamPath("encrypted_msgs.dat");
+            if(file_obj.exists()) {
+
+                // Read data from file.
+                FileInputStream fis = this.openFileInput(file_obj.getName());
+                StringBuilder file_content = new StringBuilder("");
+                byte[] buffer = new byte[1024];
+                int n;
+                while((n = fis.read(buffer)) != -1) {
+                    file_content.append(new String(buffer, 0, n));
+                }
+                fis.close();
+
+                // Deserialize data to received messages objects.
+                Gson gson = new Gson();
+                Type collection_type = new TypeToken<ArrayList<ReceivedEncryptedMessage>>(){}.getType();
+                received_enc_messages = gson.fromJson(file_content.toString(), collection_type);
+
+                file_obj.delete();
+            }
+        }
+        catch(Throwable e) {
+            Log.e(LOGTAG, "Reading received encrypted messages failed.");
+            e.printStackTrace();
+        }
+
+        // If encrypted received messages exist, decrypt and add them to our internal data.
+        if(received_enc_messages != null) {
+
+            NotificationData notification_data_obj = NotificationData.getInstance();
+            byte[] encryption_key = Config.getInstance().getEncryption_key();
+
+            for(ReceivedEncryptedMessage recv_enc_msg : received_enc_messages) {
+
+                try {
+                    ReceivedMessage msg = AlertrFirebaseMessaging.decrypt_encrypted_msg(
+                            recv_enc_msg,
+                            encryption_key);
+
+                    notification_data_obj.addReceivedMessage(msg);
+                }
+                // Either received message was illegal or decryption failed.
+                catch(org.json.JSONException e) {
+                    Log.e(LOGTAG, "Decrypted message illegal.");
+                    e.printStackTrace();
+                    AlertrFirebaseMessaging.issueErrorNotification(
+                            this,
+                            0,
+                            "Message Error",
+                            "Decryption failed or received message illegal.");
+                }
+
+                // Error thrown when decryption options are wrong.
+                catch(Throwable e) {
+                    Log.e(LOGTAG, "Received message payload illegal.");
+                    e.printStackTrace();
+                    AlertrFirebaseMessaging.issueErrorNotification(
+                            this,
+                            0,
+                            "Message Error",
+                            "Received illegal message.");
+                }
+            }
+        }
+
+        main_activity_fragment.refreshListView();
+
+    }
+
+    // Since we use "singleTask" launchMode, this function is called if we go back from
+    // the detailed view.
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+
+        // Refresh list to show if a task is read or not.
         main_activity_fragment.refreshListView();
     }
 
@@ -110,8 +193,6 @@ class AddReceivedMessage implements Runnable {
             this.recv_msg = recv_msg;
         }
 
-
-        // TODO check if MainActivity instances exists (What happens if we do not have an active GUI?)
         public void run() {
             MainActivity.main_activity.addReceivedMessage(recv_msg);
         }

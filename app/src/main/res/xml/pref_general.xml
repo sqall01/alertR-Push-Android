@@ -25,10 +25,4 @@
         android:entries="@array/pref_push_number_notifications_entries"
         android:entryValues="@array/pref_push_number_notifications_entries_values" />
 
-    <SwitchPreference
-        android:defaultValue="@string/pref_push_notification_default"
-        android:key="@string/pref_push_notification_key"
-        android:title="@string/pref_push_notification"
-        android:summary="@string/pref_push_notification_summary" />
-
 </PreferenceScreen>

@@ -68,14 +68,6 @@ public class SettingsActivity extends PreferenceActivity
 
         }
 
-        // If notification enabled has changed => transfer to firebase messaging service.
-        else if(preference.getKey() == getString(R.string.pref_push_notification_key)) {
-
-            boolean temp = (boolean) value;
-            Config.getInstance().setNotification_enabled(temp);
-
-        }
-
         return true;
     }
 
@@ -113,9 +105,6 @@ public class SettingsActivity extends PreferenceActivity
             topicPref = findPreference(getString(R.string.pref_push_number_notifications_key));
             topicPref.setOnPreferenceChangeListener(this.parent);
 
-            // Add preference change listener to notification enabled option.
-            topicPref = findPreference(getString(R.string.pref_push_notification_key));
-            topicPref.setOnPreferenceChangeListener(this.parent);
         }
 
     }

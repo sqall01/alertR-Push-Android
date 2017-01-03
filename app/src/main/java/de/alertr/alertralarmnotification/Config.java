@@ -20,17 +20,6 @@ public class Config {
     private ArrayList<String> channels_subscribed = new ArrayList<String>();
     private byte[] encryption_key = new byte[32];
     private int max_number_received_msgs = 1000;
-    private boolean notification_enabled = true;
-
-
-    public boolean isNotification_enabled() {
-        return notification_enabled;
-    }
-
-
-    public void setNotification_enabled(boolean notification_enabled) {
-        this.notification_enabled = notification_enabled;
-    }
 
 
     public byte[] getEncryption_key() {
@@ -71,7 +60,7 @@ public class Config {
 
 
     public static Config getInstance() {
-        if(config == null) {
+        if(config == null || config.getChannels_subscribed().size() == 0) {
             new Config();
         }
         return config;
@@ -97,7 +86,7 @@ public class Config {
         Log.d(LOGTAG, "parseConfig");
 
         // Parse channels from config.
-        String pref_general_channel_key = MainActivity.main_activity.getString(R.string.pref_push_channel_key); // TODO what happens if main activity does not exist?
+        String pref_general_channel_key = MainActivity.main_activity.getString(R.string.pref_push_channel_key);
         String channels_string = shared_prefs.getString(pref_general_channel_key, "");
         ArrayList<String> channels_array =
                 new ArrayList<String>(Arrays.asList(channels_string.replace(" ", "").split(",")));
@@ -106,19 +95,15 @@ public class Config {
         updateChannels(channels_array);
 
         // Parse encryption key.
-        String pref_general_encryption_key = MainActivity.main_activity.getString(R.string.pref_push_encryption_key); // TODO what happens if main activity does not exist?
+        String pref_general_encryption_key = MainActivity.main_activity.getString(R.string.pref_push_encryption_key);
         updateEncryption_key(shared_prefs.getString(pref_general_encryption_key, ""));
 
         // Parse number received messages.
-        String pref_general_number_notifications_key = MainActivity.main_activity.getString(R.string.pref_push_number_notifications_key); // TODO what happens if main activity does not exist?
-        String pref_general_number_notifications_default = MainActivity.main_activity.getString(R.string.pref_push_number_notifications_default); // TODO what happens if main activity does not exist?
+        String pref_general_number_notifications_key = MainActivity.main_activity.getString(R.string.pref_push_number_notifications_key);
+        String pref_general_number_notifications_default = MainActivity.main_activity.getString(R.string.pref_push_number_notifications_default);
         String number_str = shared_prefs.getString(pref_general_number_notifications_key, pref_general_number_notifications_default);
         max_number_received_msgs = Integer.parseInt(number_str);
 
-        // Parse notification enabled.
-        String pref_push_notification_key = MainActivity.main_activity.getString(R.string.pref_push_notification_key); // TODO what happens if main activity does not exist?
-        boolean pref_push_notification_default = Boolean.parseBoolean(MainActivity.main_activity.getString(R.string.pref_push_notification_default)); // TODO what happens if main activity does not exist?
-        this.notification_enabled = shared_prefs.getBoolean(pref_push_notification_key, pref_push_notification_default);
     }
 
 

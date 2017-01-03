@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class NotificationDetailedFragment extends Fragment {
@@ -43,6 +44,10 @@ public class NotificationDetailedFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
         msg = NotificationDetailed.notification_detailed.getMsg();
+
+        // Set message as read.
+        msg.setMsg_read(true);
+        NotificationData.getInstance().storeData();
 
         // Get instances of the all views
         // (NOTE: getView() can not be called in onCreateView() ).
@@ -79,7 +84,8 @@ public class NotificationDetailedFragment extends Fragment {
             long time_in_ms = ((long)msg.getTimeTriggered()) * 1000;
             Date date = new Date(time_in_ms);
             DateFormat date_format = DateFormat.getDateTimeInstance(DateFormat.SHORT,
-                                                                    DateFormat.SHORT);
+                                                                    DateFormat.SHORT,
+                                                                    Locale.getDefault());
             String triggered_string = date_format.format(date);
             triggered_on_content_view.setText(triggered_string);
 

@@ -1,6 +1,9 @@
 package de.alertr.alertralarmnotification;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class NotificationListAdapter extends BaseAdapter {
     private ArrayList<ReceivedMessage> list_data;
@@ -59,13 +63,16 @@ public class NotificationListAdapter extends BaseAdapter {
             holder = (ViewHolder) convert_view.getTag();
         }
 
-        boolean is_global_notification = list_data.get(position).getIsGlobalNotification();
+        ReceivedMessage msg = list_data.get(position);
+
+        boolean is_global_notification = msg.getIsGlobalNotification();
 
         // Convert timestamp to date string.
         long time_in_ms = ((long)list_data.get(position).getTimeTriggered()) * 1000;
         Date date = new Date(time_in_ms);
         DateFormat date_format = DateFormat.getDateTimeInstance(DateFormat.SHORT,
-                                                                DateFormat.SHORT);
+                                                                DateFormat.SHORT,
+                                                                Locale.getDefault());
         String time_string = date_format.format(date);
 
         // Distinguish between sensor alert and global notification.
@@ -96,6 +103,24 @@ public class NotificationListAdapter extends BaseAdapter {
             holder.timestamp_view.setText("Triggered on " + time_string);
         }
 
+        // Set background color and text for unread messages
+        boolean msg_read = msg.getMsg_read();
+        if(!msg_read) {
+            convert_view.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            holder.timestamp_view.setTypeface(null, Typeface.BOLD);
+            holder.subject_view.setTypeface(null, Typeface.BOLD);
+            holder.subject_view.setTextColor(Color.parseColor("#000000"));
+            holder.state_view.setTypeface(null, Typeface.BOLD);
+        }
+        else {
+            convert_view.setBackgroundColor(ContextCompat.getColor(
+                    MainActivity.main_activity, android.R.color.primary_text_dark));
+            holder.timestamp_view.setTypeface(null, Typeface.NORMAL);
+            holder.subject_view.setTypeface(null, Typeface.BOLD);
+            holder.subject_view.setTextColor(ContextCompat.getColor(
+                    MainActivity.main_activity, android.R.color.tertiary_text_dark));
+            holder.state_view.setTypeface(null, Typeface.NORMAL);
+        }
 
         return convert_view;
     }

@@ -197,6 +197,41 @@ public class NotificationData {
 }
 
 
+class ReceivedEncryptedMessage {
+
+    private String channel;
+    private boolean is_global_notification;
+    private String payload;
+    private int time_received;
+
+    ReceivedEncryptedMessage(String channel,
+                             boolean is_global_notification,
+                             int time_received,
+                             String payload) {
+        this.channel = channel;
+        this.is_global_notification = is_global_notification;
+        this.time_received = time_received;
+        this.payload = payload;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public String getPayload() {
+        return payload;
+    }
+
+    public boolean is_global_notification() {
+        return is_global_notification;
+    }
+
+    public int getTime_received() {
+        return time_received;
+    }
+}
+
+
 class ReceivedMessage {
 
     private long id;
@@ -209,6 +244,7 @@ class ReceivedMessage {
     private boolean is_sensor_alert;
     private int state;
     private boolean is_global_notification;
+    private boolean msg_read;
 
     ReceivedMessage(long id,
                     String channel,
@@ -219,7 +255,8 @@ class ReceivedMessage {
                     int time_received,
                     boolean is_sensor_alert,
                     int state,
-                    boolean is_global_notification) {
+                    boolean is_global_notification,
+                    boolean msg_read) {
         this.id = id;
         this.channel = channel;
         this.subject = subject;
@@ -230,6 +267,7 @@ class ReceivedMessage {
         this.is_sensor_alert = is_sensor_alert;
         this.state = state;
         this.is_global_notification = is_global_notification;
+        this.msg_read = msg_read;
     }
 
     public long getId() {
@@ -273,5 +311,13 @@ class ReceivedMessage {
 
     public boolean getIsGlobalNotification() {
         return is_global_notification;
+    }
+
+    public boolean getMsg_read() {
+        return msg_read;
+    }
+
+    public void setMsg_read(boolean msg_read) {
+        this.msg_read = msg_read;
     }
 }
