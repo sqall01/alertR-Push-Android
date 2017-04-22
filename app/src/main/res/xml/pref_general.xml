@@ -11,6 +11,13 @@
 
     <EditTextPreference
         android:defaultValue=""
+        android:inputType="textEmailAddress"
+        android:key="@string/pref_push_username_key"
+        android:title="@string/pref_push_username"
+        android:summary="@string/pref_push_username_summary"/>
+
+    <EditTextPreference
+        android:defaultValue=""
         android:maxLength="32"
         android:inputType="text"
         android:key="@string/pref_push_encryption_key"

@@ -4,9 +4,15 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="pref_not_complete">Please configure the application before using it.</string>
+
     <string name="pref_push_channel_key">channel</string>
     <string name="pref_push_channel">Channel</string>
     <string name="pref_push_channel_summary">The channel your alertR notifications are send in. Comma separated list of channels.</string>
+
+    <string name="pref_push_username_key">username</string>
+    <string name="pref_push_username">E-Mail Address</string>
+    <string name="pref_push_username_summary">The E-Mail address (username) you used for your alertr.de account.</string>
 
     <string name="pref_push_encryption_key">secret</string>
     <string name="pref_push_encryption">Shared Secret</string>

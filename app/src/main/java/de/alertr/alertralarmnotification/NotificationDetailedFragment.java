@@ -101,7 +101,13 @@ public class NotificationDetailedFragment extends Fragment {
             String received_string = date_format.format(date);
             received_on_content_view.setText(received_string);
 
-            channel_content_view.setText(msg.getChannel());
+            // Remove prefix of channel before showing it.
+            String channel = msg.getChannel();
+            String prefix = Config.generateChannelPrefix(Config.getInstance().getUsername()) + "_";
+            if(channel.startsWith(prefix)) {
+                channel = channel.substring(9);
+            }
+            channel_content_view.setText(channel);
         }
     }
 

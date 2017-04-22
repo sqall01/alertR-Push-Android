@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
 import android.content.Intent;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,6 +38,18 @@ public class MainActivity extends AppCompatActivity {
 
         // Initiate configuration (needs object of this main activity).
         Config config = Config.getInstance();
+
+        // Check if the app is already configured, otherwise show the preference screen.
+        if(!config.isConfigured()) {
+            Intent temp_intent = new Intent(this, SettingsActivity.class);
+            startActivity(temp_intent);
+
+            // Display a short message to configure the application.
+            CharSequence text = getString(R.string.pref_not_complete);
+            int duration = Toast.LENGTH_LONG;
+            Toast toast = Toast.makeText(this, text, duration);
+            toast.show();
+        }
 
         // Load existing received encrypted messages (if exists).
         ArrayList<ReceivedEncryptedMessage> received_enc_messages = null;
@@ -71,9 +84,10 @@ public class MainActivity extends AppCompatActivity {
         if(received_enc_messages != null) {
 
             NotificationData notification_data_obj = NotificationData.getInstance();
-            byte[] encryption_key = Config.getInstance().getEncryption_key();
 
             for(ReceivedEncryptedMessage recv_enc_msg : received_enc_messages) {
+                byte[] encryption_key = Config.getInstance().getEncryption_key(
+                        recv_enc_msg.getChannel());
 
                 try {
                     ReceivedMessage msg = AlertrFirebaseMessaging.decrypt_encrypted_msg(

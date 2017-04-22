@@ -44,9 +44,10 @@ public class SettingsActivity extends PreferenceActivity
             ArrayList<String> channels_array =
                     new ArrayList<String>(
                             Arrays.asList(channels_string.replace(" ", "").split(",")));
-            // NOTE: config also subscribes and unsubscribes channels.
-            Config.getInstance().updateChannels(channels_array);
 
+            // NOTE: config object takes care of notification channel, unsubscribing to old channels
+            // and so on.
+            Config.getInstance().updateChannels(channels_array);
         }
 
         // If encryption key has changed => transfer key to firebase messaging service.

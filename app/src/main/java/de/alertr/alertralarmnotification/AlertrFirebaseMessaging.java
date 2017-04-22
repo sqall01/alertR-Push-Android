@@ -133,6 +133,9 @@ public class AlertrFirebaseMessaging extends FirebaseMessagingService {
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         notification_builder.setSound(alarmSound);
 
+        // Set removing after clicking.
+        notification_builder.setAutoCancel(true);
+
         // Set vibration.
         notification_builder.setVibrate(new long[]{0, 500, 500, 500});
 
@@ -173,6 +176,9 @@ public class AlertrFirebaseMessaging extends FirebaseMessagingService {
         // Set default notification sound.
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         notification_builder.setSound(alarmSound);
+
+        // Set removing after clicking.
+        notification_builder.setAutoCancel(true);
 
         // Set vibration.
         notification_builder.setVibrate(new long[] { 0, 500, 500, 500 });
@@ -230,25 +236,15 @@ public class AlertrFirebaseMessaging extends FirebaseMessagingService {
                     channel = channel.substring(8);
                 }
 
-                byte[] encryption_key = Config.getInstance().getEncryption_key();
+                byte[] encryption_key = Config.getInstance().getEncryption_key(channel);
 
                 // Check if received special global notification message => overwrite decryption key.
                 boolean is_global_notification = false;
                 if(channel.toLowerCase().equals("alertr_notification")) {
-                    is_global_notification = true;
-
                     // DEBUG
                     Log.d(LOGTAG, "Received global notification message.");
 
-                    try {
-                        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-                        digest.reset();
-                        encryption_key = digest.digest("alertr_notification_secret".getBytes());
-                    }
-                    catch(Throwable e) {
-                        Log.e(LOGTAG, "Could not calculate global notification encryption key.");
-                        e.printStackTrace();
-                    }
+                    is_global_notification = true;
                 }
 
                 // Create received encrypted message object.
