@@ -16,7 +16,9 @@ public class Config {
     private static final String LOGTAG = "Config";
     private static Config config = null;
 
-    private ArrayList<String> channels = new ArrayList<String>();
+    // Copy of the channels without prefixes (and without alertR channels).
+    private ArrayList<String> channels_orig = new ArrayList<String>();
+
     private ArrayList<String> channels_subscribed = new ArrayList<String>();
     private String username = "";
     private byte[] encryption_key = new byte[32];
@@ -55,9 +57,17 @@ public class Config {
         return encryption_key;
     }
 
+
     public String getUsername() {
         return username;
     }
+
+
+    public void setUsername(String username) {
+        this.username = username;
+        updateChannels(this.channels_orig);
+    }
+
 
     public void updateEncryption_key(String secret) {
 
@@ -181,11 +191,6 @@ public class Config {
 
     private void subscribeChannels(ArrayList<String> channels_array) {
 
-        channels.clear();
-        for(String channel : channels_array) {
-            channels.add(channel);
-        }
-
         // Subscribe to new channels.
         for(String channel : channels_array) {
 
@@ -217,6 +222,10 @@ public class Config {
 
 
     public void updateChannels(ArrayList<String> channels_array) {
+
+        // Make a copy of the channels array without prefixes (and without alertR channels).
+        channels_orig = new ArrayList<String>(channels_array);
+
         addChannelPrefixes(channels_array);
         removeIllegalChannels(channels_array);
         channels_array.add("alertR_notification"); // Add manually the notification channel.

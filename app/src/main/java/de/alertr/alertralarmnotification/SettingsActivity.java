@@ -50,6 +50,12 @@ public class SettingsActivity extends PreferenceActivity
             Config.getInstance().updateChannels(channels_array);
         }
 
+        // If username has changed => set username, subscribe and unsubscribe channels.
+        else if(preference.getKey() == getString(R.string.pref_push_username_key)) {
+            String username = (String) value;
+            Config.getInstance().setUsername(username);
+        }
+
         // If encryption key has changed => transfer key to firebase messaging service.
         else if(preference.getKey() == getString(R.string.pref_push_encryption_key)) {
 
@@ -96,6 +102,10 @@ public class SettingsActivity extends PreferenceActivity
 
             // Add preference change listener to channel option.
             Preference topicPref = findPreference(getString(R.string.pref_push_channel_key));
+            topicPref.setOnPreferenceChangeListener(this.parent);
+
+            // Add preference change listener to username option.
+            topicPref = findPreference(getString(R.string.pref_push_username_key));
             topicPref.setOnPreferenceChangeListener(this.parent);
 
             // Add preference change listener to encryption option.
