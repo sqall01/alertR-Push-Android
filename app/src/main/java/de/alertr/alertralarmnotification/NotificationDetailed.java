@@ -4,6 +4,7 @@ package de.alertr.alertralarmnotification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 public class NotificationDetailed extends AppCompatActivity {
 
@@ -22,7 +23,6 @@ public class NotificationDetailed extends AppCompatActivity {
         notification_detailed = this;
 
         setContentView(R.layout.activity_notification_detailed);
-
     }
 
 
@@ -30,4 +30,14 @@ public class NotificationDetailed extends AppCompatActivity {
         return msg;
     }
 
+
+    @Override
+    public void onBackPressed() {
+
+        // Refresh list to show if a task is read or not when someone presses the back button.
+        if(MainActivity.main_activity != null) {
+            MainActivity.main_activity.refreshListView();
+        }
+        finish();
+    }
 }

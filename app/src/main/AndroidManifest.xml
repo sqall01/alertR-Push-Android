@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="de.alertr.alertralarmnotification">
 
     <!-- Needed for Android 4.1.x -->
@@ -29,9 +30,19 @@
             android:label="@string/title_activity_settings"
             android:parentActivityName=".MainActivity"></activity>
 
+        <!-- [START fcm_disable_analytics] -->
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="true" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+        <!-- [END fcm_disable_analytics] -->
+
         <!-- [START firebase_service] -->
         <service
-            android:name=".AlertrFirebaseMessaging">
+            android:name=".AlertrFirebaseMessaging"
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>

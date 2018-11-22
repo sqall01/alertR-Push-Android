@@ -49,7 +49,6 @@ public class Config {
         return prefix.toString().toLowerCase();
     }
 
-
     public byte[] getEncryption_key(String channel) {
         if(channel.toLowerCase().equals("alertr_notification")) {
             return encryption_key_notification;
@@ -57,17 +56,14 @@ public class Config {
         return encryption_key;
     }
 
-
     public String getUsername() {
         return username;
     }
-
 
     public void setUsername(String username) {
         this.username = username;
         updateChannels(this.channels_orig);
     }
-
 
     public void updateEncryption_key(String secret) {
 
@@ -101,21 +97,17 @@ public class Config {
         }
     }
 
-
     public ArrayList<String> getChannels_subscribed() {
         return channels_subscribed;
     }
-
 
     public int getMax_number_received_msgs() {
         return max_number_received_msgs;
     }
 
-
     public void setMax_number_received_msgs(int value) {
         max_number_received_msgs = value;
     }
-
 
     public static Config getInstance() {
         if(config == null || config.getChannels_subscribed().size() == 0) {
@@ -123,7 +115,6 @@ public class Config {
         }
         return config;
     }
-
 
     private Config() {
 
@@ -136,7 +127,6 @@ public class Config {
 
         config = this;
     }
-
 
     public void parseConfig(SharedPreferences shared_prefs) {
 
@@ -166,7 +156,6 @@ public class Config {
 
     }
 
-
     private void addChannelPrefixes(ArrayList<String> channels_array) {
         String prefix = generateChannelPrefix(this.username);
         for(String channel : new ArrayList<String>(channels_array)) {
@@ -175,7 +164,6 @@ public class Config {
             channels_array.add(channel);
         }
     }
-
 
     private void removeIllegalChannels(ArrayList<String> channels_array) {
         for(String channel : new ArrayList<String>(channels_array)) {
@@ -188,21 +176,21 @@ public class Config {
         }
     }
 
-
     private void subscribeChannels(ArrayList<String> channels_array) {
 
         // Subscribe to new channels.
         for(String channel : channels_array) {
 
-            // Check if the channel is already subscribed to => subscribe if not.
+            // Check if the channel is already subscribed to => mark as subscribed.
             if(!channels_subscribed.contains(channel)) {
-
                 channels_subscribed.add(channel);
-                FirebaseMessaging.getInstance().subscribeToTopic(channel);
-
-                // DEBUG
-                Log.d(LOGTAG, "Subscribed to channel: " + channel);
             }
+
+            // Just subscribe to channel even if we already subscribed to it.
+            FirebaseMessaging.getInstance().subscribeToTopic(channel);
+
+            // DEBUG
+            Log.d(LOGTAG, "Subscribed to channel: " + channel);
         }
 
         // Unsubscribe old channels.
@@ -220,7 +208,7 @@ public class Config {
         }
     }
 
-
+    // Updates and subscribes to new given channels.
     public void updateChannels(ArrayList<String> channels_array) {
 
         // Make a copy of the channels array without prefixes (and without alertR channels).
@@ -232,6 +220,11 @@ public class Config {
         subscribeChannels(channels_array);
     }
 
+    // Subscribes to already configured channels.
+    public void updateChannels() {
+        ArrayList<String>channels_array = new ArrayList<String>(channels_orig);
+        updateChannels(channels_array);
+    }
 
     public boolean isConfigured() {
 

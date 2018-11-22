@@ -1,5 +1,6 @@
 package de.alertr.alertralarmnotification;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Base64;
 import android.util.Log;
@@ -60,19 +62,26 @@ public class AlertrFirebaseMessaging extends FirebaseMessagingService {
             byte[] encrypted_msg = Base64.decode(new_enc_msg.getPayload(), Base64.DEFAULT);
             byte[] iv = new byte[16];
             byte[] encrypted_bytes = new byte[encrypted_msg.length - 16];
-            for (int i = 0; i < 16; i++) {
-                iv[i] = encrypted_msg[i];
-            }
-            for (int i = 0; i < encrypted_msg.length - 16; i++) {
-                encrypted_bytes[i] = encrypted_msg[i + 16];
-            }
+            System.arraycopy(encrypted_msg,
+                    0,
+                    iv,
+                    0,
+                    16);
+            System.arraycopy(encrypted_msg,
+                    16,
+                    encrypted_bytes,
+                    0,
+                    encrypted_msg.length - 16);
 
             // Decrypt received message and remove random bytes from message.
             byte[] decrypted_bytes = decrypt(encryption_key, iv, encrypted_bytes);
             byte[] decrypted_msg_bytes = new byte[decrypted_bytes.length - 4];
-            for (int i = 0; i < decrypted_bytes.length - 4; i++) {
-                decrypted_msg_bytes[i] = decrypted_bytes[i + 4];
-            }
+            System.arraycopy(decrypted_bytes,
+                    4,
+                    decrypted_msg_bytes,
+                    0,
+                    decrypted_bytes.length - 4);
+
             String decrypted_str = new String(decrypted_msg_bytes);
             JSONObject payload_obj = new JSONObject(decrypted_str);
 
@@ -124,7 +133,7 @@ public class AlertrFirebaseMessaging extends FirebaseMessagingService {
 
         // Build notification.
         NotificationCompat.Builder notification_builder =
-                new NotificationCompat.Builder(context)
+                new NotificationCompat.Builder(context, "error_channel")
                         .setSmallIcon(R.drawable.ic_notification)
                         .setContentTitle(title)
                         .setContentText(text);
@@ -145,10 +154,21 @@ public class AlertrFirebaseMessaging extends FirebaseMessagingService {
         // Gets an instance of the NotificationManager service
         NotificationManager notification_manager =
                 (NotificationManager)context.getSystemService(NOTIFICATION_SERVICE);
+        if(notification_manager == null) {
+            Log.e(LOGTAG, "Not able to create notification manager.");
+            return;
+        }
+
+        // Create notification channel (since it only has to be created with Oreo, check for it).
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("error_channel",
+                    "Channel for errors.",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            notification_manager.createNotificationChannel(channel);
+        }
 
         // Builds the notification and issues it.
         notification_manager.notify(id, notification_builder.build());
-
     }
 
 
@@ -156,7 +176,7 @@ public class AlertrFirebaseMessaging extends FirebaseMessagingService {
 
         // Build notification.
         NotificationCompat.Builder notification_builder =
-                new NotificationCompat.Builder(context)
+                new NotificationCompat.Builder(context, "msg_channel")
                         .setSmallIcon(R.drawable.ic_notification)
                         .setContentTitle(title)
                         .setContentText(text);
@@ -171,6 +191,8 @@ public class AlertrFirebaseMessaging extends FirebaseMessagingService {
                         result_intent,
                         PendingIntent.FLAG_UPDATE_CURRENT
                 );
+
+
         notification_builder.setContentIntent(result_pending_intent);
 
         // Set default notification sound.
@@ -189,9 +211,22 @@ public class AlertrFirebaseMessaging extends FirebaseMessagingService {
         // Gets an instance of the NotificationManager service
         NotificationManager notification_manager =
                 (NotificationManager)context.getSystemService(NOTIFICATION_SERVICE);
+        if(notification_manager == null) {
+            Log.e(LOGTAG, "Not able to create notification manager.");
+            return;
+        }
+
+        // Create notification channel (since it only has to be created with Oreo, check for it).
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("msg_channel",
+                    "Channel for messages.",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            notification_manager.createNotificationChannel(channel);
+        }
 
         // Builds the notification and issues it.
         notification_manager.notify(id, notification_builder.build());
+
 
     }
 

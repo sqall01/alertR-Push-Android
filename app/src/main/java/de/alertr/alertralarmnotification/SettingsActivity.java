@@ -6,6 +6,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,6 +79,30 @@ public class SettingsActivity extends PreferenceActivity
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+
+        // DEBUG
+        Log.d(LOGTAG, "Settings Activity onBackPressed()");
+
+        // Check if the app is already configured, otherwise remain in preference screen.
+        Config config = Config.getInstance();
+        if(!config.isConfigured()) {
+
+            // Display a short message to configure the application.
+            CharSequence text = getString(R.string.pref_not_complete);
+            int duration = Toast.LENGTH_LONG;
+            Toast toast = Toast.makeText(this, text, duration);
+            toast.show();
+        }
+
+        else {
+            // Re-subscribe to all channels.
+            config.updateChannels();
+
+            finish();
+        }
+    }
 
     public static class SettingsActivityFragment extends PreferenceFragment {
 
@@ -119,6 +144,5 @@ public class SettingsActivity extends PreferenceActivity
         }
 
     }
-
 }
 

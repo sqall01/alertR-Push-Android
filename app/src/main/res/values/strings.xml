@@ -1,14 +1,16 @@
 <resources>
-    <string name="app_name">alertR</string>
+    <string name="app_name">AlertR</string>
     <string name="title_activity_settings">Settings</string>
 
     <string name="action_settings">Settings</string>
+    <string name="action_privacy">Privacy Policy</string>
 
+    <string name="pref_play_unavail">Google Play Services are not available. Please install them and restart the App.</string>
     <string name="pref_not_complete">Please configure the application before using it.</string>
 
     <string name="pref_push_channel_key">channel</string>
     <string name="pref_push_channel">Channel</string>
-    <string name="pref_push_channel_summary">The channel your alertR notifications are send in. Comma separated list of channels.</string>
+    <string name="pref_push_channel_summary">The channel your alertR notifications are sent in. Comma separated list of channels.</string>
 
     <string name="pref_push_username_key">username</string>
     <string name="pref_push_username">E-Mail Address</string>
@@ -36,8 +38,6 @@
     <string name="notification_detailed_channel">Channel:</string>
     <string name="notification_detailed_message">Message:</string>
 
-
-
     <string-array name="pref_push_number_notifications_entries">
         <item>10</item>
         <item>50</item>
@@ -52,5 +52,7 @@
         <item>1000</item>
     </string-array>
 
+    <string name="splash_alertr_logo">AlertR Logo</string>
+    <string name="splash_loading">Loading ...</string>
 
 </resources>
