@@ -5,6 +5,10 @@
     <string name="action_settings">Settings</string>
     <string name="action_privacy">Privacy Policy</string>
 
+    <string name="pref_battery_note_key">battery_note</string>
+    <string name="pref_battery_note">Important Battery Note</string>
+    <string name="pref_battery_note_summary">Please deactivate all battery optimization or power saving settings of your Android system for this app. Since these settings shutdown services after a while, push notifications may not reach you.</string>
+
     <string name="pref_play_unavail">Google Play Services are not available. Please install them and restart the App.</string>
     <string name="pref_not_complete">Please configure the application before using it.</string>
 

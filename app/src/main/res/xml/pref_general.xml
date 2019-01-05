@@ -2,6 +2,13 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <Preference
+        android:key="@string/pref_battery_note_key"
+        android:selectable="false"
+        android:persistent="false"
+        android:title="@string/pref_battery_note"
+        android:summary="@string/pref_battery_note_summary"/>
+
     <EditTextPreference
         android:defaultValue=""
         android:inputType="textMultiLine"
