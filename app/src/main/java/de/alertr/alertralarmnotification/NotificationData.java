@@ -176,6 +176,18 @@ public class NotificationData {
     }
 
 
+    public void clearReceivedMessages() {
+
+        // DEBUG
+        Log.d(LOGTAG, "clearReceivedMessages()");
+
+        received_messages.clear();
+
+        storeData();
+
+    }
+
+
     public ArrayList<ReceivedMessage> getReceivedMsgs() {
         return new ArrayList<ReceivedMessage>(received_messages);
     }

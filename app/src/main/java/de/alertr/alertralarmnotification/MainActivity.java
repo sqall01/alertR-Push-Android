@@ -99,7 +99,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.action_settings) {
+        if(id == R.id.action_clear) {
+
+            // DEBUG
+            Log.d(LOGTAG, "Clear History Menu");
+
+            // Clear received messages and refresh list.
+            NotificationData notification_data = NotificationData.getInstance();
+            notification_data.clearReceivedMessages();
+            refreshListView();
+
+            return true;
+        }
+
+        else if(id == R.id.action_settings) {
 
             // DEBUG
             Log.d(LOGTAG, "Settings Menu");

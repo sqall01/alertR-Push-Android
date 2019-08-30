@@ -2,6 +2,7 @@
     <string name="app_name">AlertR</string>
     <string name="title_activity_settings">Settings</string>
 
+    <string name="action_clear">Clear History</string>
     <string name="action_settings">Settings</string>
     <string name="action_privacy">Privacy Policy</string>
 
