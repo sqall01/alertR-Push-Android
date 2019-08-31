@@ -7,8 +7,8 @@ android {
     defaultConfig {
         applicationId "de.alertr.alertralarmnotification"
         minSdkVersion 16
-        targetSdkVersion 26
-        versionCode 31
+        targetSdkVersion 28
+        versionCode 33
         versionName "1.1"
     }
     buildTypes {
